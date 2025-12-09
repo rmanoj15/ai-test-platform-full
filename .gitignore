@@ -1,0 +1,36 @@
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+dependency-reduced-pom.xml
+.classpath
+.project
+.settings/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node (if used in automation)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build
+build/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
