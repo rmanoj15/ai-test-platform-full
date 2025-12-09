@@ -1,0 +1,43 @@
+name: AI Test Generation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  ai-test-generation:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Call AI Platform Orchestrator
+        env:
+          PLATFORM_BASE_URL: ${{ secrets.AI_PLATFORM_BASE_URL }}
+          PLATFORM_API_KEY: ${{ secrets.AI_PLATFORM_API_KEY }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          REPO_NAME="${{ github.repository }}"
+          BASE_BRANCH="${{ github.base_ref }}"
+          HEAD_BRANCH="${{ github.head_ref }}"
+
+          echo "Triggering AI platform for PR #$PR_NUMBER..."
+
+          curl -s -X POST "$PLATFORM_BASE_URL/api/orchestrator/trigger"                 -H "Content-Type: application/json"                 -H "Authorization: Bearer $PLATFORM_API_KEY"                 -d @<(cat <<EOF
+          {
+            "repoFullName": "$REPO_NAME",
+            "pullRequestNumber": $PR_NUMBER,
+            "baseBranch": "$BASE_BRANCH",
+            "headBranch": "$HEAD_BRANCH",
+            "commitMode": "AUTO_COMMIT",
+            "requestedTestTypes": ["API", "UI", "MOBILE"]
+          }
+          EOF
+          )

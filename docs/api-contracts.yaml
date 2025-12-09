@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: AI Test Platform API
+  version: 1.0.0
+
+paths:
+  /api/orchestrator/trigger:
+    post:
+      summary: Trigger AI test generation for a PR
+      operationId: triggerGeneration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PullRequestEvent'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+
+  /api/diff/context:
+    post:
+      summary: Build diff context from PR info
+      operationId: buildDiffContext
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PullRequestEvent'
+      responses:
+        '200':
+          description: Diff context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiffContext'
+
+  /api/generation/generate-tests:
+    post:
+      summary: Generate tests from diff and config
+      operationId: generateTests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerationRequest'
+      responses:
+        '200':
+          description: Generated tests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+
+  /api/config/project/{repoFullName}:
+    get:
+      summary: Get project configuration
+      operationId: getProjectConfig
+      parameters:
+        - in: path
+          name: repoFullName
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Project config
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /actuator/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    PullRequestEvent:
+      type: object
+      properties:
+        repoFullName:
+          type: string
+        pullRequestNumber:
+          type: integer
+        baseBranch:
+          type: string
+        headBranch:
+          type: string
+        commitMode:
+          type: string
+          enum: [AUTO_COMMIT, COMMENT_ONLY]
+        requestedTestTypes:
+          type: array
+          items:
+            type: string
+            enum: [API, UI, MOBILE]
+
+    DiffContext:
+      type: object
+      properties:
+        repoFullName:
+          type: string
+        pullRequestNumber:
+          type: integer
+        diffSummary:
+          type: string
+        changedFiles:
+          type: array
+          items:
+            type: string
+        language:
+          type: string
+        testFramework:
+          type: string
+
+    GenerationRequest:
+      type: object
+      properties:
+        diffContext:
+          $ref: '#/components/schemas/DiffContext'
+        projectConfig:
+          type: object
+          additionalProperties: true
+
+    GenerationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [QUEUED, SUCCESS, FAILED]
+        message:
+          type: string
+        generatedFiles:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+              content:
+                type: string
+              testType:
+                type: string
+                enum: [API, UI, MOBILE]

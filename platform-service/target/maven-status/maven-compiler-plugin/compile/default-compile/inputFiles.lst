@@ -1,0 +1,15 @@
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/model/PullRequestEvent.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/service/ProjectConfigService.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/model/GenerationResponse.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/model/DiffContext.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/service/DiffService.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/controller/OrchestratorController.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/service/AiGenerationService.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/controller/AiGenerationController.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/service/LlmClient.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/AiPlatformApplication.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/controller/ConfigController.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/model/GenerationRequest.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/service/GitCommitService.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/controller/DiffController.java
+/Users/macbook/Documents/GitHub/ai-test-platform-full/platform-service/src/main/java/com/example/aiplatform/controller/HealthController.java
